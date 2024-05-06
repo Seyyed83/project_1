@@ -1,5 +1,6 @@
 package com.AP.view.myComponents;
 
+import com.AP.view.ArrowView;
 import com.AP.view.CharacterView;
 
 import javax.swing.*;
@@ -37,6 +38,12 @@ MyPanel extends JPanel implements Paintable{
         }
         for (CharacterView c:characters){
             try {
+                if (c instanceof ArrowView){
+                    if (((ArrowView) c).isVisible()){
+                        c.drawCharacter(graphics2D);
+                    }
+                    continue;
+                }
                 c.drawCharacter(graphics2D);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

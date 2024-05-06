@@ -1,30 +1,34 @@
 package com.AP.model;
 
+import com.AP.controller.Constant;
+
 import java.awt.geom.Point2D;
 
 public abstract class EnemyCharacter extends CharacterModel {
-    double X,Y, coefficient;
+    double X, Y, coefficient;
     private Point2D characterPoint, targetPoint;
     protected double acceleration = 0.125;
+
     public EnemyCharacter(int x, int y, int width, int height, String addressImage) {
         super(x, y, width, height, addressImage);
-        this.characterPoint = new Point2D.Double(x,y);
+        this.characterPoint = new Point2D.Double(x, y);
         setTarget();
     }
-    private void makeMainDelta(){
-        X=targetPoint.getX()-characterPoint.getX();
-        Y=targetPoint.getY()-characterPoint.getY();
-        setMovement(8);
+
+    private void makeMainDelta() {
+        X = targetPoint.getX() - characterPoint.getX();
+        Y = targetPoint.getY() - characterPoint.getY();
+        setMovement(Constant.SQUARE_NATURAL_MOVEMENT);
     }
 
     private void setCoefficient() {
-        coefficient=getMovement()/targetPoint.distance(characterPoint);
+        coefficient = getMovement() / targetPoint.distance(characterPoint);
     }
 
-    protected void moveCharacter(){
+    protected void moveCharacter() {
         makeMainDelta();
         setCoefficient();
-        if (coefficient!= java.lang.Double.POSITIVE_INFINITY) {
+        if (coefficient != java.lang.Double.POSITIVE_INFINITY) {
             setX(getX() + (int) (coefficient * X));
             setY(getY() + (int) (coefficient * Y));
         }
@@ -33,6 +37,7 @@ public abstract class EnemyCharacter extends CharacterModel {
     }
 
     protected abstract void setTarget();
+
     public Point2D getCharacterPoint() {
         return characterPoint;
     }

@@ -8,7 +8,7 @@ public class SquareView extends CharacterView{
     private double angleInRadiance=Math.toRadians(1);
     public SquareView(int x, int y, int width, int height, String addressImage) {
         super(x, y, width, height, addressImage);
-        setAngles(4);
+        setAngles(4,4);
     }
     @Override
     public void drawCharacter(Graphics2D graphics2D) {
@@ -25,18 +25,12 @@ public class SquareView extends CharacterView{
         if (isRotated()) {
             graphics2D.rotate(angleInRadiance, x + (double) width / 2, y + (double) height / 2);
         }
-        graphics2D.drawPolygon(getXs(),getYs(),4);
+        if (numberOfXp==0) {
+            graphics2D.drawPolygon(getXs(), getYs(), 4);
+        }else {
+            graphics2D.drawLine(x,y,x+1,y+1);
+        }
         semaphore.release();
-    }
-    private void state1() {
-        getXs()[0]=x;
-        getXs()[1]=x+width;
-        getXs()[2]=x+width;
-        getXs()[3]=x;
-        getYs()[0]=y;
-        getYs()[1]=y;
-        getYs()[2]=y+height;
-        getYs()[3]=y+height;
     }
     private void setAngleInRadiance(){
         if (angleInRadiance>6.28){

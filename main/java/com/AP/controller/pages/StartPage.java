@@ -3,6 +3,7 @@ package com.AP.controller.pages;
 import com.AP.controller.Constant;
 import com.AP.controller.MovementController;
 import com.AP.controller.PublicController;
+import com.AP.model.ArrowModel;
 import com.AP.model.CharacterModel;
 import com.AP.model.EpsilonModel;
 import com.AP.model.SquareModel;
@@ -12,10 +13,7 @@ import com.AP.view.myComponents.MyPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public abstract class StartPage {
     private final static EpsilonModel epsilonModel = EpsilonModel.getINSTANCE();
@@ -76,6 +74,9 @@ public abstract class StartPage {
         gameFrame.myAddAll(gamePanel);
         gameFrame.setResizable(false);
         setResize(gameFrame, gamePanel, 5, epsilonModel);
+        JLabel epsilonHealth=new JLabel("♥"+epsilonModel.getHp());
+        epsilonHealth.setBounds(0,0,80,20);
+        gamePanel.add(epsilonHealth);
         gamePanel.repaint();
         sleep(300);
     }
@@ -137,14 +138,49 @@ public abstract class StartPage {
             SwingUtilities.invokeLater(() -> {
                 setGameFrameAndGamePanel();
                 SquareModel squareModel=new SquareModel(20,20, Constant.SQUARE_SIDE,Constant.SQUARE_SIDE,"src/main/java/com/AP/Images/square.png");
-                PublicController.getModelToView().get(squareModel).setCharacterPanel(getGamePanel());
+                PublicController.getModelToView().get(squareModel).setCharacterPanel(gamePanel);
                 SquareModel squareModel1=new SquareModel(100,20,Constant.SQUARE_SIDE,Constant.SQUARE_SIDE,"src/main/java/com/AP/Images/square.png");
-                PublicController.getModelToView().get(squareModel1).setCharacterPanel(getGamePanel());
+                PublicController.getModelToView().get(squareModel1).setCharacterPanel(gamePanel);
+
+                ArrowModel arrowModel=new ArrowModel(0,0, Constant.ARROW_SIDE,Constant.ARROW_SIDE,"");
+                PublicController.getModelToView().get(arrowModel).setCharacterPanel(gamePanel);
+                PublicController.getModelToView().get(arrowModel).getCharacterPanel().getCharacterList().remove(arrowModel);
+
                 gamePanel.repaint();
                 epsilonModel.setClientCharacterPanel(gamePanel);
                 setGameFrameListener();
                 squareModel.startMoveTimer();
                 squareModel1.startMoveTimer();
+
+                gamePanel.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if (e.getButton()==MouseEvent.BUTTON3 && !arrowModel.isVisible()){
+                            arrowModel.setX(e.getX());
+                            arrowModel.setY(e.getY());
+                            arrowModel.setCollisionTimer();
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+
+                    }
+                });
 
                 collisionCharacterTimer.start();
             });

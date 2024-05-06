@@ -15,6 +15,7 @@ public class SquareModel extends EnemyCharacter{
     public SquareModel(int x, int y, int width, int height, String addressImage) {
         super(x, y, width, height, addressImage);
         makeViewCharacter();
+        setXP(1);
     }
 
     @Override
@@ -44,8 +45,6 @@ public class SquareModel extends EnemyCharacter{
     }
     public void setCollisionTimer(){
         Timer collisionTimer=new Timer(2, e -> {
-//                setX(getX() + Constant.DELTA_COLLISION);
-//                setY(getY() + Constant.DELTA_COLLISION);
             MovementController.collisionDirection(this);
             if (getX()> MONITOR_SIZE_DIMENSION.width) {
                 setX(MONITOR_SIZE_DIMENSION.width);

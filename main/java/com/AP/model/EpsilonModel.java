@@ -108,5 +108,7 @@ public class EpsilonModel extends ClientCharacter {
     }
 
     @Override
-    public void collisionDamage(CharacterModel other) {}
+    public void collisionDamage(CharacterModel other) {
+        //TODO
+    }
 }

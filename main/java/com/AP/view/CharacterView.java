@@ -3,13 +3,11 @@ package com.AP.view;
 import com.AP.controller.pages.StartPage;
 import com.AP.view.myComponents.MyPanel;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 public abstract class CharacterView {
-    protected int x, y, width, height;
+    protected int x, y, width, height,numberOfXp;
     private int[] xs,ys;
     protected Rectangle[] rectangleAngles;
     private boolean isRotated;
@@ -26,11 +24,11 @@ public abstract class CharacterView {
         this.width = width;
         this.height = height;
         this.addressImage = addressImage;
-        try {
-            characterImage = ImageIO.read(new File(addressImage));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            characterImage = ImageIO.read(new File(addressImage));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         characterPanel= StartPage.getGamePanel();
     }
     public void setCharacterPanel(MyPanel characterPanel){
@@ -99,13 +97,24 @@ public abstract class CharacterView {
     public int[] getYs() {
         return ys;
     }
-    public void setAngles(int angle) {
+    public void setAngles(int angle,int a) {
         xs=new int[angle];
         ys=new int[angle];
+        state1();
         rectangleAngles=new Rectangle[angle];
         for (int i=0;i< angle;i++){
-            rectangleAngles[i]=new Rectangle(xs[i]-(width/4),ys[i]-(height/4),width/2,height/2);
+            rectangleAngles[i]=new Rectangle(xs[i]-(width/a),ys[i]-(height/a),width/(2*a),height/(2*a));
         }
+    }
+    public void state1() {
+        getXs()[0]=x;
+        getXs()[1]=x+width;
+        getXs()[2]=x+width;
+        getXs()[3]=x;
+        getYs()[0]=y;
+        getYs()[1]=y;
+        getYs()[2]=y+height;
+        getYs()[3]=y+height;
     }
 
     public void setRectangleAngles(int[] xAngles,int[] yAngles) {
@@ -116,5 +125,13 @@ public abstract class CharacterView {
 
     public Rectangle[] getRectangleAngles() {
         return rectangleAngles;
+    }
+
+    public int getNumberOfXp() {
+        return numberOfXp;
+    }
+
+    public void setNumberOfXp(int numberOfXp) {
+        this.numberOfXp = numberOfXp;
     }
 }

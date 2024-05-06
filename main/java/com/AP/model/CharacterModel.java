@@ -10,12 +10,12 @@ import java.util.ArrayList;
 public abstract class CharacterModel{
     private JPanel ClientCharacterPanel;
     private String addressImage;
-    private int x,y,width, height,Hp;
+    private int x,y,width, height,Hp,XP;
     private double movement;
     private CharacterModel otherForCollision;
     private final Rectangle collisionRectangle;
     protected int delayCollisionStopper;
-    private boolean isUpCollision,isRightCollision;
+    private boolean isUpCollision,isRightCollision,isDownCollision,isLeftCollision;
     public final static ArrayList<CharacterModel> characters=new ArrayList<>();
     public CharacterModel(int x, int y, int width, int height, String addressImage) {
         this.x = x;
@@ -114,6 +114,22 @@ public abstract class CharacterModel{
         return isRightCollision;
     }
 
+    public boolean isDownCollision() {
+        return isDownCollision;
+    }
+
+    public void setDownCollision(boolean downCollision) {
+        isDownCollision = downCollision;
+    }
+
+    public boolean isLeftCollision() {
+        return isLeftCollision;
+    }
+
+    public void setLeftCollision(boolean leftCollision) {
+        isLeftCollision = leftCollision;
+    }
+
     public void setRightCollision(boolean rightCollision) {
         isRightCollision = rightCollision;
     }
@@ -125,5 +141,13 @@ public abstract class CharacterModel{
 
     public void setHp(int hp) {
         Hp = hp;
+    }
+
+    public int getXP() {
+        return XP;
+    }
+
+    public void setXP(int XP) {
+        this.XP = XP;
     }
 }

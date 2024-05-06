@@ -11,4 +11,6 @@ public abstract class Constant {
     public static final int EPSILON_SIDE_DIRECTION = 1;
     public static final int SQUARE_SIDE = 20;
     public static final int DELTA_COLLISION = 10;
+    public static final int ARROW_SIDE = 20;
+    public static final int SQUARE_NATURAL_MOVEMENT = 4;
 }
