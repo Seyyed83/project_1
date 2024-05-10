@@ -14,9 +14,6 @@ public class ArrowView extends CharacterView{
         graphics2D.setColor(Color.BLUE);
         graphics2D.setStroke(new BasicStroke(4));
         graphics2D.drawLine(EpsilonView.getINSTANCE().x, EpsilonView.getINSTANCE().y, x,y);
-//        graphics2D.setColor(Color.cyan);
-//        graphics2D.setStroke(new BasicStroke(1));
-//        graphics2D.draw(new Ellipse2D.Double(x,y, 20,20));
     }
 
     public boolean isVisible() {

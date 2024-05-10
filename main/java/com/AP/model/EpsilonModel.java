@@ -31,8 +31,8 @@ public class EpsilonModel extends ClientCharacter {
             if (acceleration < 6) {
                 acceleration *= 1.2;
             }
-            if (isMoveUpTimer && !isMoveDownTimer) {
-                if (isMoveRightTimer&&!isMoveLeftTimer) {
+            if (isMoveUpTimer && !isMoveDownTimer&&getY()>5) {
+                if (isMoveRightTimer&&!isMoveLeftTimer){
                     setY((int) (getY() + (-Constant.EPSILON_SIDE_DIRECTION-acceleration) ));
                     setX((int) (getX() + (Constant.EPSILON_SIDE_DIRECTION+acceleration) ));
                 } else if (isMoveLeftTimer&&!isMoveRightTimer) {
@@ -42,7 +42,7 @@ public class EpsilonModel extends ClientCharacter {
                     setY(getY() +(int) (-Constant.EPSILON_MAIN_DIRECTION-acceleration));
                 }
                 getClientCharacterPanel().repaint();
-            } else if (isMoveDownTimer && !isMoveUpTimer) {
+            } else if (isMoveDownTimer && !isMoveUpTimer&&getY()<315) {
                 if (isMoveRightTimer&&!isMoveLeftTimer) {
                     setY((int) (getY() + (Constant.EPSILON_SIDE_DIRECTION + acceleration) ));
                     setX((int) (getX() + (Constant.EPSILON_SIDE_DIRECTION + acceleration) ));
@@ -53,10 +53,10 @@ public class EpsilonModel extends ClientCharacter {
                     setY(getY() + Constant.EPSILON_MAIN_DIRECTION + (int) acceleration);
                 }
                 getClientCharacterPanel().repaint();
-            } else if (isMoveRightTimer && !isMoveLeftTimer) {
+            } else if (isMoveRightTimer && !isMoveLeftTimer&&getX()<508) {
                 setX(getX() + Constant.EPSILON_MAIN_DIRECTION + (int) acceleration);
                 getClientCharacterPanel().repaint();
-            } else if (isMoveLeftTimer && !isMoveRightTimer) {
+            } else if (isMoveLeftTimer && !isMoveRightTimer&&getX()>163) {
                 setX(getX() - Constant.EPSILON_MAIN_DIRECTION - (int) acceleration);
                 getClientCharacterPanel().repaint();
             }
@@ -104,6 +104,9 @@ public class EpsilonModel extends ClientCharacter {
     public void usualReactCollision(CharacterModel other) {
         if (other instanceof EnemyCharacter){
             setCollisionTimer();
+            if (other.isDead()){
+
+            }
         }
     }
 

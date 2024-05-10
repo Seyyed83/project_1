@@ -25,7 +25,7 @@ public class SquareView extends CharacterView{
         if (isRotated()) {
             graphics2D.rotate(angleInRadiance, x + (double) width / 2, y + (double) height / 2);
         }
-        if (numberOfXp==0) {
+        if (!isDead()) {
             graphics2D.drawPolygon(getXs(), getYs(), 4);
         }else {
             graphics2D.drawLine(x,y,x+1,y+1);

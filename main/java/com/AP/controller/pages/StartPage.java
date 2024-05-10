@@ -20,6 +20,8 @@ public abstract class StartPage {
     private final static EpsilonView epsilonView = EpsilonView.getINSTANCE();
     private static final MyFrame gameFrame = new MyFrame(Constant.MONITOR_SIZE_DIMENSION);
     private static final MyPanel gamePanel = new MyPanel();
+    public static final JLabel epsilonHealth=new JLabel("♥ : "+epsilonModel.getHp());
+    public static final JLabel epsilonXP=new JLabel("🍽 : "+epsilonModel.getXP());
     private static final Timer collisionCharacterTimer=new Timer(20, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -74,11 +76,23 @@ public abstract class StartPage {
         gameFrame.myAddAll(gamePanel);
         gameFrame.setResizable(false);
         setResize(gameFrame, gamePanel, 5, epsilonModel);
-        JLabel epsilonHealth=new JLabel("♥"+epsilonModel.getHp());
-        epsilonHealth.setBounds(0,0,80,20);
+        epsilonHealth.setVisible(true);
+        epsilonHealth.setBounds(190,10,80,20);
         gamePanel.add(epsilonHealth);
+        epsilonXP.setVisible(true);
+        epsilonXP.setBounds(270,10,80,20);
+        gamePanel.add(epsilonXP);
         gamePanel.repaint();
         sleep(300);
+        Timer resizeTimer=new Timer(20, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (gameFrame.getWidth()>400) {
+                    setResize(gameFrame, gamePanel, 5, epsilonModel);
+                }
+            }
+        });
+        resizeTimer.start();
     }
 
     private static boolean windowSizeChecker(Component component, int width, int height) {
@@ -97,9 +111,7 @@ public abstract class StartPage {
         epsilonModel.startMoveTimer();
         gameFrame.addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
+            public void keyTyped(KeyEvent e) {}
             @Override
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
@@ -141,6 +153,8 @@ public abstract class StartPage {
                 PublicController.getModelToView().get(squareModel).setCharacterPanel(gamePanel);
                 SquareModel squareModel1=new SquareModel(100,20,Constant.SQUARE_SIDE,Constant.SQUARE_SIDE,"src/main/java/com/AP/Images/square.png");
                 PublicController.getModelToView().get(squareModel1).setCharacterPanel(gamePanel);
+                SquareModel squareModel2=new SquareModel(100,100,Constant.SQUARE_SIDE,Constant.SQUARE_SIDE,"src/main/java/com/AP/Images/square.png");
+                PublicController.getModelToView().get(squareModel2).setCharacterPanel(gamePanel);
 
                 ArrowModel arrowModel=new ArrowModel(0,0, Constant.ARROW_SIDE,Constant.ARROW_SIDE,"");
                 PublicController.getModelToView().get(arrowModel).setCharacterPanel(gamePanel);
@@ -151,6 +165,7 @@ public abstract class StartPage {
                 setGameFrameListener();
                 squareModel.startMoveTimer();
                 squareModel1.startMoveTimer();
+                squareModel2.startMoveTimer();
 
                 gamePanel.addMouseListener(new MouseListener() {
                     @Override
@@ -187,5 +202,8 @@ public abstract class StartPage {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public static void setEpsilonHealth(){
+        epsilonHealth.setText("♥ : "+epsilonModel.getHp());
     }
 }

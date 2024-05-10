@@ -27,13 +27,15 @@ public class ArrowModel extends ClientCharacter{
     public void collisionDamage(CharacterModel other) {
         if (other instanceof EnemyCharacter&&visible) {
             other.setHp(other.getHp()-5);
+            PublicController.deadCharacter(other);
+//            PublicController.WipeOut((MyPanel) getClientCharacterPanel(),other);
         }
     }
 
 
     public void setCollisionTimer(){
         setVisible(true);
-        Timer shootingStopper=new Timer(1000, new ActionListener() {
+        Timer shootingStopper=new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);

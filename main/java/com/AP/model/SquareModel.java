@@ -29,15 +29,17 @@ public class SquareModel extends EnemyCharacter{
         setHp(10);
     }
 
-    Timer moveTimer=new Timer(30, new ActionListener() {
+    Timer moveTimer=new Timer(20, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (acceleration<3){
                 acceleration*=1.1;
             }
-            setMovement(getMovement()*acceleration);
-            moveCharacter();
-            getClientCharacterPanel().repaint();
+            if (!isDead()) {
+                setMovement(getMovement() * acceleration);
+                moveCharacter();
+                getClientCharacterPanel().repaint();
+            }
         }
     });
     public void startMoveTimer(){
@@ -67,6 +69,11 @@ public class SquareModel extends EnemyCharacter{
     }
     @Override
     public void usualReactCollision(CharacterModel other) {
+        if (other instanceof ArrowModel){
+            if (!((ArrowModel) other).isVisible()){
+                return;
+            }
+        }
         if (other instanceof EnemyCharacter){
             delayCollisionStopper =30;
         }else {

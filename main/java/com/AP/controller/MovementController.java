@@ -1,20 +1,31 @@
 package com.AP.controller;
 
+import com.AP.controller.pages.StartPage;
 import com.AP.model.CharacterModel;
+import com.AP.model.EpsilonModel;
+import com.AP.model.SquareModel;
 
 import java.awt.*;
 
 public abstract class MovementController {
     public static void handelCollision(){
         for (int i = 0; i< CharacterModel.characters.size(); i++){
+            PublicController.deadCharacter(CharacterModel.characters.get(i));
             for (int j=i+1;j<CharacterModel.characters.size();j++) {
-                if (CharacterModel.characters.get(i).getCollisionRectangle().intersects(CharacterModel.characters.get(i + 1).getCollisionRectangle())) {
-                    collisionDamage(CharacterModel.characters.get(i),CharacterModel.characters.get(j));
+                if (CharacterModel.characters.get(i).getCollisionRectangle().intersects(CharacterModel.characters.get(j).getCollisionRectangle())) {
                     setCollisionBoolean(CharacterModel.characters.get(i),CharacterModel.characters.get(j));
-                    CharacterModel.characters.get(j).usualReactCollision(CharacterModel.characters.get(i));
-                    CharacterModel.characters.get(i).usualReactCollision(CharacterModel.characters.get(j));
-                    if (i==0){
+                    PublicController.setLabelText(StartPage.epsilonHealth,"♥ : "+ EpsilonModel.getINSTANCE().getHp());
+                    if (CharacterModel.characters.get(j).isDead()){
+                        PublicController.WipeOut(StartPage.getGamePanel(),CharacterModel.characters.get(j));
+                        if (CharacterModel.characters.get(j) instanceof SquareModel){
+                            EpsilonModel.getINSTANCE().setXP(EpsilonModel.getINSTANCE().getXP()+5);
+                            CharacterModel.characters.remove(CharacterModel.characters.get(j));
+                            StartPage.epsilonXP.setText("🍽 : "+EpsilonModel.getINSTANCE().getXP());
+                        }
+                    } else {
+                        CharacterModel.characters.get(j).usualReactCollision(CharacterModel.characters.get(i));
                         CharacterModel.characters.get(i).usualReactCollision(CharacterModel.characters.get(j));
+                        collisionDamage(CharacterModel.characters.get(i),CharacterModel.characters.get(j));
                     }
                 }
             }
@@ -50,6 +61,7 @@ public abstract class MovementController {
             for (Rectangle rectangle : rc1) {
                 if (c2.getCollisionRectangle().intersects(rectangle)){
                     c1.collisionDamage(c2);
+                    c2.collisionDamage(c1);
                 }
             }
         }
@@ -57,6 +69,7 @@ public abstract class MovementController {
             for (Rectangle rectangle : rc2) {
                 if (c1.getCollisionRectangle().intersects(rectangle)) {
                     c2.collisionDamage(c1);
+                    c1.collisionDamage(c2);
                 }
             }
         }

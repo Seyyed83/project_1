@@ -14,6 +14,7 @@ public abstract class CharacterView {
     private String addressImage;
     private BufferedImage characterImage;
     private MyPanel characterPanel;
+    private boolean isDead;
     public MyPanel getCharacterPanel() {
         return characterPanel;
     }
@@ -130,8 +131,11 @@ public abstract class CharacterView {
     public int getNumberOfXp() {
         return numberOfXp;
     }
+    public boolean isDead() {
+        return isDead;
+    }
 
-    public void setNumberOfXp(int numberOfXp) {
-        this.numberOfXp = numberOfXp;
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 }

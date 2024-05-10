@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class CharacterModel{
+    private boolean isDead;
     private JPanel ClientCharacterPanel;
     private String addressImage;
     private int x,y,width, height,Hp,XP;
@@ -99,6 +100,8 @@ public abstract class CharacterModel{
     public abstract void usualReactCollision(CharacterModel other);
 
     public Rectangle getCollisionRectangle() {
+        setX(getX());
+        setY(getY());
         return collisionRectangle;
     }
 
@@ -149,5 +152,13 @@ public abstract class CharacterModel{
 
     public void setXP(int XP) {
         this.XP = XP;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 }
